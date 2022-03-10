@@ -20,7 +20,7 @@ while True:
     wind_direction_cardinal = sensor.degrees_to_cardinal(sensor.wind_direction)
 
     weather_data_dict = {
-        'Temperature': sensor.temperature,
+        'Temperature': sensor.temperature,  # TODO double check if offset ok for my setup (sensor.temperature_offset)
         'Humidity': sensor.humidity,
         'Dewpoint': sensor.dewpoint,
         'Wind': sensor.wind_speed * 1.944,  # m/s -> knots
