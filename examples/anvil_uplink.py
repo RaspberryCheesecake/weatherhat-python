@@ -48,7 +48,7 @@ font = ImageFont.truetype(UserFont, font_size)
 text_colour = (255, 255, 255)
 back_colour = (0, 170, 170)
 
-message = "Uploading weather data to Anvil"
+message = "Uploading ☁ weather data to Anvil️"
 size_x, size_y = draw.textsize(message, font)
 
 # Calculate text position
