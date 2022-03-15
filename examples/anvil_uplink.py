@@ -6,7 +6,7 @@ from time import sleep
 sensor = weatherhat.WeatherHAT()
 
 print(f"""
-Connect to uplink and give stored weather table results from the sensors
+Connect to uplink and store weather data from the sensors
 Press Ctrl+C to exit!
 """)
 
