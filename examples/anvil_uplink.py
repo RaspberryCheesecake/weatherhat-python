@@ -101,4 +101,7 @@ try:
         sleep(30.0)  # Then store data again
 
 except KeyboardInterrupt:
-    disp.reset()
+    print("Stopping.")
+    img = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
+    disp.display(img)
+
