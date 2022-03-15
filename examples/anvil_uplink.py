@@ -1,7 +1,10 @@
 import weatherhat
 import anvil.server
 import os
+import ST7789
 from time import sleep
+from PIL import Image, ImageDraw, ImageFont
+from fonts.ttf import ManropeBold as UserFont
 
 sensor = weatherhat.WeatherHAT()
 
@@ -15,6 +18,49 @@ if "CLIENT_UPLINK_KEY" in os.environ:
 else:
     print("Woops, couldn't find uplink key - did you set one locally?")
 
+
+SPI_SPEED_MHZ = 80
+
+# Create LCD class instance.
+disp = ST7789.ST7789(
+    rotation=90,
+    port=0,
+    cs=1,
+    dc=9,
+    backlight=13,
+    spi_speed_hz=SPI_SPEED_MHZ * 1000 * 1000
+)
+
+# Initialize display.
+disp.begin()
+
+# Width and height to calculate text position.
+WIDTH = disp.width
+HEIGHT = disp.height
+
+# New canvas to draw on.
+img = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
+draw = ImageDraw.Draw(img)
+
+# Text settings.
+font_size = 30
+font = ImageFont.truetype(UserFont, font_size)
+text_colour = (255, 255, 255)
+back_colour = (0, 170, 170)
+
+message = "Uploading weather data to Anvil"
+size_x, size_y = draw.textsize(message, font)
+
+# Calculate text position
+x = (WIDTH - size_x) / 2
+y = (HEIGHT / 2) - (size_y / 2)
+
+# Draw background rectangle and write text.
+draw.rectangle((0, 0, WIDTH, HEIGHT), back_colour)
+draw.text((x, y), message, font=font, fill=text_colour)
+disp.display(img)
+
+# Keep running
 while True:
     sensor.update(interval=60.0)
 
