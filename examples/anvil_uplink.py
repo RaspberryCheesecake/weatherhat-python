@@ -48,7 +48,7 @@ font = ImageFont.truetype(UserFont, font_size)
 text_colour = (255, 255, 255)
 back_colour = (0, 170, 170)
 
-message = "Uploading ☁ weather data to Anvil️"
+message = "Uploading weather data to Anvil️"
 size_x, size_y = draw.textsize(message, font)
 
 # Calculate text position
@@ -61,40 +61,44 @@ draw.text((x, y), message, font=font, fill=text_colour)
 disp.display(img)
 
 # Keep running
-while True:
-    sensor.update(interval=60.0)
+try:
+    while True:
+        sensor.update(interval=60.0)
 
-    wind_direction_cardinal = sensor.degrees_to_cardinal(sensor.wind_direction)
+        wind_direction_cardinal = sensor.degrees_to_cardinal(sensor.wind_direction)
 
-    weather_data_dict = {
-        'Temperature': sensor.temperature,  # TODO double check if offset ok for my setup (sensor.temperature_offset)
-        'Humidity': sensor.humidity,
-        'Dewpoint': sensor.dewpoint,
-        'Wind': sensor.wind_speed * 1.944,  # m/s -> knots
-        'Wind Direction': wind_direction_cardinal,
-        'Rainfall': sensor.rain,  # mm/sec
-        'Pressure': sensor.pressure,
-        }
+        weather_data_dict = {
+            'Temperature': sensor.temperature,  # TODO double check if offset ok for my setup (sensor.temperature_offset)
+            'Humidity': sensor.humidity,
+            'Dewpoint': sensor.dewpoint,
+            'Wind': sensor.wind_speed * 1.944,  # m/s -> knots
+            'Wind Direction': wind_direction_cardinal,
+            'Rainfall': sensor.rain,  # mm/sec
+            'Pressure': sensor.pressure,
+            }
 
-    anvil.server.call('store_latest_weather_hat_data', weather_data_dict)
+        anvil.server.call('store_latest_weather_hat_data', weather_data_dict)
 
-    print(f"""
-System temp: {sensor.device_temperature:0.2f} *C
-Temperature: {sensor.temperature:0.2f} *C
+        print(f"""
+    System temp: {sensor.device_temperature:0.2f} *C
+    Temperature: {sensor.temperature:0.2f} *C
+    
+    Humidity:    {sensor.humidity:0.2f} %
+    Dew point:   {sensor.dewpoint:0.2f} *C
+    
+    Light:       {sensor.lux:0.2f} Lux
+    
+    Pressure:    {sensor.pressure:0.2f} hPa
+    
+    Wind (avg):  {sensor.wind_speed:0.2f} m/sec
+    
+    Rain:        {sensor.rain:0.2f} mm/sec
+    
+    Wind (avg):  {sensor.wind_direction:0.2f} degrees ({wind_direction_cardinal})
+    
+    """)
 
-Humidity:    {sensor.humidity:0.2f} %
-Dew point:   {sensor.dewpoint:0.2f} *C
+        sleep(30.0)  # Then store data again
 
-Light:       {sensor.lux:0.2f} Lux
-
-Pressure:    {sensor.pressure:0.2f} hPa
-
-Wind (avg):  {sensor.wind_speed:0.2f} m/sec
-
-Rain:        {sensor.rain:0.2f} mm/sec
-
-Wind (avg):  {sensor.wind_direction:0.2f} degrees ({wind_direction_cardinal})
-
-""")
-
-    sleep(30.0)  # Then store data again
+except KeyboardInterrupt:
+    disp.reset()
