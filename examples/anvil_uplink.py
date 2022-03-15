@@ -12,7 +12,8 @@ Press Ctrl+C to exit!
 
 if "CLIENT_UPLINK_KEY" in os.environ:
     anvil.server.connect(os.environ["CLIENT_UPLINK_KEY"])
-
+else:
+    print("Woops, couldn't find uplink key - did you set one locally?")
 
 while True:
     sensor.update(interval=60.0)
@@ -26,6 +27,7 @@ while True:
         'Wind': sensor.wind_speed * 1.944,  # m/s -> knots
         'Wind Direction': wind_direction_cardinal,
         'Rainfall': sensor.rain,  # mm/sec
+        'Pressure': sensor.pressure,
         }
 
     anvil.server.call('store_latest_weather_hat_data', weather_data_dict)
@@ -49,4 +51,4 @@ Wind (avg):  {sensor.wind_direction:0.2f} degrees ({wind_direction_cardinal})
 
 """)
 
-    sleep(10.0)
+    sleep(30.0)  # Then store data again
