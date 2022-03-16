@@ -9,7 +9,8 @@ from fonts.ttf import ManropeBold as UserFont
 sensor = weatherhat.WeatherHAT()
 
 print(f"""
-Connect to uplink and store weather data from the sensors
+anvil_uplink.py - Example showing how to send sensor data from Weather HAT into an Anvil web dashboard.
+Sign up for an account at https://anvil.works/new-build to obtain a client uplink key.
 Press Ctrl+C to exit!
 """)
 
