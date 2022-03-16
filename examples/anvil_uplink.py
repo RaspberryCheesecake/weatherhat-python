@@ -38,14 +38,20 @@ disp = ST7789.ST7789(
 
 # Initialize display.
 disp.begin()
-
-# Width and height of display
 WIDTH = disp.width
 HEIGHT = disp.height
 
 # Open and resize uploading indicator image
 image = Image.open("icons/anvil-uploading.png")
 image = image.resize(WIDTH, HEIGHT)
+
+# Read the BME280 and discard the initial nonsense readings
+sensor.update(interval=10.0)
+temperature = sensor.temperature
+humidity = sensor.relative_humidity
+pressure = sensor.pressure
+print("Discarding the first few BME280 readings (they aren't accurate)...")
+sleep(10.0)
 
 
 try:
@@ -83,7 +89,7 @@ try:
     
     """)
 
-        sleep(300.0)  # Then store data again
+        sleep(300.0)  # Then store data again every 5 min
 
 except KeyboardInterrupt:
     print("Finished data upload. Restart script to continue.")
