@@ -83,18 +83,12 @@ try:
         print(f"""
     System temp: {sensor.device_temperature:0.2f} *C
     Temperature: {sensor.temperature:0.2f} *C
-    
     Humidity:    {sensor.humidity:0.2f} %
     Dew point:   {sensor.dewpoint:0.2f} *C
-    
     Light:       {sensor.lux:0.2f} Lux
-    
     Pressure:    {sensor.pressure:0.2f} hPa
-    
     Wind (avg):  {sensor.wind_speed:0.2f} m/sec
-    
     Rain:        {sensor.rain:0.2f} mm/sec
-    
     Wind (avg):  {sensor.wind_direction:0.2f} degrees ({wind_direction_cardinal})
     
     """)
