@@ -42,7 +42,7 @@ WIDTH = disp.width
 HEIGHT = disp.height
 
 # Open and resize uploading indicator image
-image = Image.open("icons/anvil-uploading.png")
+image = Image.open(os.path.abspath("icons/anvil-uploading.png"))
 image = image.resize(WIDTH, HEIGHT)
 
 # Read the BME280 and discard the initial nonsense readings
