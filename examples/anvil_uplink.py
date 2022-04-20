@@ -43,7 +43,7 @@ HEIGHT = disp.height
 
 # Open and resize uploading indicator image
 image = Image.open(os.path.abspath("weatherhat-python/examples/icons/anvil-uploading.png"))
-image = image.resize(WIDTH, HEIGHT)
+image = image.resize((WIDTH, HEIGHT))
 
 # Read the BME280 and discard the initial nonsense readings
 sensor.update(interval=10.0)
