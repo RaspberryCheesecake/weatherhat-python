@@ -24,6 +24,14 @@ else:
 
 anvil.server.connect(client_uplink_key)
 
+# Read the BME280 and discard the initial nonsense readings
+sensor.update(interval=10.0)
+temperature = sensor.temperature
+humidity = sensor.relative_humidity
+pressure = sensor.pressure
+print("Discarding the first few BME280 readings (they aren't accurate)...")
+sleep(10.0)
+
 SPI_SPEED_MHZ = 80
 
 # Create LCD class instance.
@@ -42,20 +50,11 @@ WIDTH = disp.width
 HEIGHT = disp.height
 
 # Open and resize uploading indicator image
-image = Image.open(os.path.abspath("weatherhat-python/examples/icons/anvil-uploading.png"))
-image = image.resize((WIDTH, HEIGHT))
-
-# Read the BME280 and discard the initial nonsense readings
-sensor.update(interval=10.0)
-temperature = sensor.temperature
-humidity = sensor.relative_humidity
-pressure = sensor.pressure
-print("Discarding the first few BME280 readings (they aren't accurate)...")
-sleep(10.0)
-
+status_image = Image.open(os.path.abspath("weatherhat-python/examples/icons/anvil-uploading.png"))
+status_image = status_image.resize((WIDTH, HEIGHT))
 
 try:
-    disp.display(image)
+    disp.display(status_image)
 
     while True:
         sensor.update(interval=60.0)
@@ -97,5 +96,5 @@ except Exception as e:
     print("Failed due to: {}".format(e))
 
 finally:
-    img = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
-    disp.display(img)
+    done_image = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
+    disp.display(done_image)
