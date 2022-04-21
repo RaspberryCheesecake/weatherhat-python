@@ -15,14 +15,14 @@ Press Ctrl+C to exit!
 
 if "CLIENT_UPLINK_KEY" in os.environ:
     # Works if you've saved the uplink key on your Raspberry Pi already
-    client_uplink_key = os.environ["CLIENT_UPLINK_KEY"]
+    CLIENT_UPLINK_KEY = os.environ["CLIENT_UPLINK_KEY"]
 else:
     # Alternatively, fill in your Anvil app's Client Uplink Key here.
-    client_uplink_key = "YOUR CLIENT UPLINK KEY HERE"
+    CLIENT_UPLINK_KEY = "YOUR CLIENT UPLINK KEY HERE"
     # Remember, your key is a secret,
     # so make sure not to publish it when you publish this code!
 
-anvil.server.connect(client_uplink_key)
+anvil.server.connect(CLIENT_UPLINK_KEY)
 
 # Read the BME280 and discard the initial nonsense readings
 sensor.update(interval=10.0)
@@ -73,6 +73,8 @@ try:
         anvil.server.call('store_latest_weather_hat_data', weather_data_dict)
 
         print(f"""
+    Uploading weather data...  
+    
     System temp: {sensor.device_temperature:0.2f} *C
     Sensor temp offset: {sensor.temperature_offset}
     Temperature: {sensor.temperature:0.2f} *C
