@@ -57,6 +57,7 @@ try:
     disp.display(status_image)
 
     while True:
+        sensor.temperature_offset = -7.6
         sensor.update(interval=60.0)
         wind_direction_cardinal = sensor.degrees_to_cardinal(sensor.wind_direction)
 
