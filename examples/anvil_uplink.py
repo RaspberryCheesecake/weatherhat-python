@@ -54,6 +54,7 @@ status_image = status_image.resize((WIDTH, HEIGHT))
 
 try:
     disp.display(status_image)
+    anvil.server.connect(CLIENT_UPLINK_KEY)
 
     while True:
         sensor.temperature_offset = -7.6
@@ -71,7 +72,6 @@ try:
             }
 
         try:
-            anvil.server.connect(CLIENT_UPLINK_KEY)
             anvil.server.call('store_latest_weather_hat_data', weather_data_dict)
             print(f"""
                 Uploading weather data...
