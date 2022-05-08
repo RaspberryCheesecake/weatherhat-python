@@ -76,26 +76,16 @@ try:
             print(f"""
                 Uploading weather data...
 
-                System temp: {sensor.device_temperature:0.2f} *C
-                Sensor temp offset: {sensor.temperature_offset}
-                Temperature: {sensor.temperature:0.2f} *C
-                Humidity:    {sensor.humidity:0.2f} %
-                Dew point:   {sensor.dewpoint:0.2f} *C
-                Light:       {sensor.lux:0.2f} Lux
-                Pressure:    {sensor.pressure:0.2f} hPa
-                Wind (avg):  {sensor.wind_speed:0.2f} m/sec
-                Rain:        {sensor.rain:0.2f} mm/sec
-                Wind (avg):  {sensor.wind_direction:0.2f} degrees ({wind_direction_cardinal})
-
+                {weather_data_dict}
+                
+                Will measure again in 5 min
                 Ctrl+C to exit
 
                 """)
         except Exception as e:
             print("Upload failed due to: {}".format(e))
-            print("Will try again in 5 minutes.")
-        finally:
-            anvil.server.disconnect()  # disconnect regardless
-            sleep(300.0)  # Then attempt to store data again every 5 min
+
+        sleep(300.0)  # Then attempt to store data again every 5 min
 
 except KeyboardInterrupt:
     print("Finished data upload. Restart script to continue.")
