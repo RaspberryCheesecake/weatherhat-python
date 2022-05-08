@@ -101,5 +101,6 @@ except KeyboardInterrupt:
     print("Finished data upload. Restart script to continue.")
 
 finally:
+    anvil.server.disconnect()
     done_image = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
     disp.display(done_image)
