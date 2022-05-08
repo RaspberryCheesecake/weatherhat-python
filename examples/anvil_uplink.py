@@ -47,7 +47,9 @@ WIDTH = disp.width
 HEIGHT = disp.height
 
 # Open and resize uploading indicator image
-status_image = Image.open(os.path.abspath("weatherhat-python/examples/icons/anvil-uploading.png"))
+my_path = os.path.abspath(os.path.dirname(__file__))
+image_path = os.path.join(my_path, "/icons/anvil-uploading.png")
+status_image = Image.open(image_path)
 status_image = status_image.resize((WIDTH, HEIGHT))
 
 try:
