@@ -90,12 +90,12 @@ try:
                 Ctrl+C to exit
 
                 """)
-            anvil.server.disconnect()
         except Exception as e:
             print("Upload failed due to: {}".format(e))
             print("Will try again in 5 minutes.")
         finally:
-            sleep(300.0)  # Then store data again every 5 min
+            anvil.server.disconnect()  # disconnect regardless
+            sleep(300.0)  # Then attempt to store data again every 5 min
 
 except KeyboardInterrupt:
     print("Finished data upload. Restart script to continue.")
