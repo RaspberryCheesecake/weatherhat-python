@@ -76,8 +76,12 @@ try:
             anvil.server.call('store_latest_weather_hat_data', weather_data_dict)
             print("Uploading weather data...")
             pprint(weather_data_dict)
-            print("Ctrl+C to exit")
             anvil.server.disconnect()
+            print(f"""
+            Sending data to Anvil every 5 minutes.
+            Press Ctrl+C to exit.
+            
+            """)
         except Exception as e:
             print("Upload failed due to: {}".format(e))
 
