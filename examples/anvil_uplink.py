@@ -3,6 +3,7 @@ import anvil.server
 import os
 import ST7789
 from time import sleep
+from pprint import pprint
 from PIL import Image
 
 sensor = weatherhat.WeatherHAT()
@@ -54,7 +55,6 @@ status_image = status_image.resize((WIDTH, HEIGHT))
 
 try:
     disp.display(status_image)
-    anvil.server.connect(CLIENT_UPLINK_KEY)
 
     while True:
         sensor.temperature_offset = -7.6
@@ -72,16 +72,12 @@ try:
             }
 
         try:
+            anvil.server.connect(CLIENT_UPLINK_KEY)
             anvil.server.call('store_latest_weather_hat_data', weather_data_dict)
-            print(f"""
-                Uploading weather data...
-
-                {weather_data_dict}
-                
-                Will measure again in 5 min
-                Ctrl+C to exit
-
-                """)
+            print("Uploading weather data...")
+            pprint(weather_data_dict)
+            print("Ctrl+C to exit")
+            anvil.server.disconnect()
         except Exception as e:
             print("Upload failed due to: {}".format(e))
 
@@ -91,6 +87,5 @@ except KeyboardInterrupt:
     print("Finished data upload. Restart script to continue.")
 
 finally:
-    anvil.server.disconnect()
     done_image = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
     disp.display(done_image)
