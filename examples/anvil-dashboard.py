@@ -9,7 +9,7 @@ from PIL import Image
 sensor = weatherhat.WeatherHAT()
 
 print(f"""
-client_uplink.py - Example showing how to send sensor data from Weather HAT into an Anvil web dashboard.
+anvil-dashboard.py - Example showing how to send sensor data from Weather HAT into an Anvil web dashboard.
 Sign up for an account at https://anvil.works/new-build to obtain a client uplink key.
 Press Ctrl+C to exit!
 """)
