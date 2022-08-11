@@ -10,7 +10,7 @@ sensor = weatherhat.WeatherHAT()
 
 print(f"""
 anvil-dashboard.py - Example showing how to send sensor data from Weather HAT into an Anvil web dashboard.
-Sign up for an account at https://anvil.works/new-build to obtain a client uplink key.
+Follow the tutorial at https://anvil.works/blog/anvil-weatherhat to sign up for free and obtain a client uplink key.
 Press Ctrl+C to exit!
 """)
 
